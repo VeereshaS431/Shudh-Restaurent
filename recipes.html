@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            row-gap: 50px;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        #card {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            /* box-shadow: 10px 10px 10px rgb(107, 106, 106); */
+            border: 2px solid rgb(246, 241, 241);
+            background-color: rgb(242, 243, 244);
+
+        }
+
+        img {
+            margin-left: 20px;
+            margin-right: 20px;
+            width: 300px;
+            margin-top: 20px;
+        }
+
+        #ptag1 {
+            font-size: 23px;
+            text-align: center;
+        }
+
+        #ptag2 {
+            font-size: 15px;
+            text-align: justify;
+            /* line-height: 10px; */
+            line-height-step: 5px;
+            margin-left: 20px;
+            margin-right: 20px;
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        #ptag3 {
+            font-size: 15px;
+            text-align: justify;
+            margin-left: 20px;
+            margin-right: 20px;
+        }
+        
+    </style>
+</head>
+
+<body>
+    <script>
+        var data = window.localStorage.getItem("data")
+        var info = JSON.parse(data);
+
+        var divcard = document.createElement("div")
+        document.body.appendChild(divcard)
+        divcard.setAttribute("id", "card")
+
+        var imgg = document.createElement("img")
+        divcard.appendChild(imgg)
+        imgg.setAttribute("src", info["Image"])
+
+        var ptag1 = document.createElement("p")
+        divcard.appendChild(ptag1)
+        ptag1.innerText = info["Title"]
+        ptag1.setAttribute("id", "ptag1")
+
+        for (let [key, value] of Object.entries(info.Ingredients)) {
+    // console.log(key, value);
+
+            var ptag2 = document.createElement("p")
+            divcard.appendChild(ptag2)
+            ptag2.innerText = value
+            ptag2.setAttribute("id", "ptag2")
+        }
+
+        var ptag3 = document.createElement("p")
+        divcard.appendChild(ptag3)
+        ptag3.innerText = info["Instructions"]
+        ptag3.setAttribute("id", "ptag3")
+
+    </script>
+</body>
+
+</html>

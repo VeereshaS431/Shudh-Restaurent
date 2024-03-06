@@ -1,56 +1,167 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body{
+            display: flex;
+            justify-content: center;
+            row-gap: 30px;
+            flex-direction: column;
+            align-items: center;
+           /* background: url(https://athleanx.com/wp-content/uploads/2012/11/food-journal.jpg) no-repeat center;
+           background-size: cover; */
+           
+        }
+        input{
+            width: 500px;
+            height: 50px;
+            border-radius: 15px;
+            padding: 20px;
+            font-size: 20px;
+            margin-top: 10px;
+        }
+        ::placeholder{
+            font-size: 18px;
+            
+        }
+
+        .container{
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            /* border: 1px solid black;
+            width: 100%;
+            height: 100vh; */
+            gap: 20px;
+        }
+        #card{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            width: 300px;
+            height: 320px;
+            box-shadow: 10px 10px 10px rgb(107, 106, 106);
+            border: 2px solid rgb(246, 241, 241);
+            
+        }
+        img{
+            margin-left: 20px;
+            margin-right: 20px;
+            width: 250px;
+            margin-top: 20px;
+        }
+        #ptag1{
+            font-size: 18px;
+            text-align: center;
+        }
+        /* #ptag2{
+            font-size: 15px;
+            text-align: justify;
+            margin-left: 20px;
+            margin-right: 20px;
+        } */
+
+        button{
+            /* margin-bottom: 30px; */
+            width: 80px;
+            height: 30px;
+            border-radius: 5px;
+            position: absolute;
+            margin-top: 265px;
+
+        }
+        h1{
+            font-size: 30px;
+            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+        }
+
+        @media screen and (min-width:300px) and (max-width:550px) {
+            input{
+                width: 300px;
+            }
+        }
+    </style>
+</head>
+
 <body>
-<center><h1>Shudh Restaurent<h1></center>
-<marquee> CHICKEN BIRIYANI </marquee>
+    <h1>Recipes</h1>
+    <form action="">
+        <input type="search" placeholder="Enter Item">
+    </form>
+
+    <div class="container">
+    
+    </div>
+    <script>
+
+       
+        document.forms[0].addEventListener("submit", (e) => {
+            e.preventDefault();
+            var name=e.target[0].value
+            var a=name.replace(" ","%20")
+            console.log(a);
+            const url = `https://food-recipes-with-images.p.rapidapi.com/?q=${a}`;
+            console.log(url)
+            const options = {
+                method: 'GET',
+                headers: {
+                    'X-RapidAPI-Key': 'c9f5daa650mshbee706d9da7d332p1d5784jsna7a03865519c',
+                    'X-RapidAPI-Host': 'food-recipes-with-images.p.rapidapi.com'
+                }
+            };
+
+            fetch(url, options).then((val) => {
+                return val.json();
+            }).then((val) => {
+                console.log(val);
+               
+
+                var container = document.getElementsByClassName("container")
 
 
-<img src="./images/chicken_biriyani.jpg" width="350" height="300">
-<img src="./images/chiken_tandori.jpg" width="350" height="300">
-<img src="./images/french_fry.jpg" width="350" height="300" alt="">
-<img src="./images/spicy_chicken.jpg" width="350" height="300" alt="">
-<img src="./images/restaurent_image.jpg" width="100%" height="400">
+                for(let i=0; i<val.d.length; i++){
+                var divcard = document.createElement("div")
+                container[0].appendChild(divcard)
+                divcard.setAttribute("id", "card")
 
-<h3>Menu</h3>
-<pre><h4>All Time Favourite</h4>
-    French Fries	            106/-
-    Chilli Cheese Toast 	    115/-
-    Chilli Cheese Gralic Toast 	    115/-
-    Garlic Bread	             98/-
-    Garlic Bread with Cheese	    119/-
-</pre>
+                var imgg = document.createElement("img")
+                divcard.appendChild(imgg)
+                imgg.setAttribute("src", val.d[i]["Image"])
 
-<pre>
-    <h4>Starters</h4>
-    Tandoori Paneer Tikka	    220/-
-    Malai Paneer Tikka	            220/-
-    Soya Tandoori Tikka 	    175/-
-    Tandoori Aloo	            179/-
-    Punjabi Soya Chap	            179/-
-    Hare-Bhare Kabab	            162/-
-    Dahi ke Kabab	            179/-
-    Platter	                    325/-
-</pre>
-<pre>
-    <h4>Rice / Pulao / Biryanis / Raitas</h4>
-    Steam Rice	                    161/-
-    Soya Dum Biryani 	            220/-
-    Veg. Pulao	                    161/-
-    Mix Veg. Pulao	            161/-
-    Jeera Pulao	                    161/-
-    Matka Biryani With Raita 	    220/-
-    Hyderabadi Biryani 	            220/-
-    Plain Raita	                    102/-
-    Boondi Raita	            102/-
-    Mix. Veg. Raita	            102/-
-    Jeera Raita	                    102/-
-    Pineapple Raita	            102/-
-</pre>
-<h4>Address</h4>
-<pre>
-    Fun Sqaure Mall, Village: Koi Sahib,
-    Dhun Road, Sangrur
-    Phone No :+01672-233233
-    E-mail: info@shudhrestaurant.com
-</pre>
+                var ptag1 = document.createElement("p")
+                divcard.appendChild(ptag1)
+                ptag1.innerText = val.d[i]["Title"]
+                ptag1.setAttribute("id","ptag1")
+
+                var btn=document.createElement("button")
+                divcard.appendChild(btn)
+                btn.innerText="Recipe"
+
+                btn.addEventListener("click",()=>{
+                    window.localStorage.setItem("data", JSON.stringify(val.d[i]))
+                    window.location.assign("./recipes.html")
+                })
+
+                // var ptag2 = document.createElement("p")
+                // divcard.appendChild(ptag2)
+                // ptag2.innerText=val.d[i]["Instructions"]
+                // ptag2.setAttribute("id","ptag2")
+
+            }
+        
+            })
+                
+        })
+
+
+    </script>
 </body>
+
 </html>
